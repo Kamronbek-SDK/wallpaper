@@ -1,5 +1,6 @@
 import 'dart:ui';
 
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 
@@ -27,17 +28,17 @@ class _BottomNavState extends State<BottomNav> {
       child: ClipRRect(
         borderRadius: BorderRadius.circular(50),
         child: BackdropFilter(
-          filter: ImageFilter.blur(sigmaX: 20, sigmaY: 20),
+          filter: ImageFilter.blur(sigmaX: 10, sigmaY: 10),
           child: Padding(
             padding: const EdgeInsets.symmetric(horizontal: 16),
             child: Row(
               crossAxisAlignment: CrossAxisAlignment.center,
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
-                _iconBtn(0, 'vector', () {}),
-                _iconBtn(1, 'vector1', () {}),
-                _iconBtn(2, 'vector2', () {}),
-                _iconBtn(3, 'vector3', () {})
+                _iconBtn(0, 'vector', () => widget.onClick(0)),
+                _iconBtn(1, 'vector1', () => widget.onClick(1)),
+                _iconBtn(2, 'vector2', () => widget.onClick(2)),
+                _iconBtn(3, 'vector3', () => widget.onClick(3))
               ],
             ),
           ),
@@ -53,11 +54,12 @@ class _BottomNavState extends State<BottomNav> {
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           IconButton(
-              onPressed: onClick, icon: Image.asset('assets/icons/$icon.png')),
+              onPressed: onClick, icon: Image.asset('assets/icons/$icon.png', width: 24, height: 24,)),
           const Gap(4),
-          Container(
+          AnimatedContainer(
             height: 6,
             width: 6,
+            duration: const Duration(milliseconds: 250),
             decoration: BoxDecoration(
                 shape: BoxShape.circle,
                 color: place == widget.index

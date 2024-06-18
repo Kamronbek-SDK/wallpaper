@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:wallpaper_app/widget/bottom_nav.dart';
 
 class MainPage extends StatefulWidget {
   const MainPage({super.key});
@@ -8,8 +9,11 @@ class MainPage extends StatefulWidget {
 }
 
 class _MainPageState extends State<MainPage> {
+  int _currentIndex = 0;
   @override
   Widget build(BuildContext context) {
-    return Scaffold();
+    return Scaffold(
+      bottomNavigationBar: BottomNav(index: _currentIndex, onClick: (index) => setState(() {_currentIndex = index;})),
+    );
   }
 }
