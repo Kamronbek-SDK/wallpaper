@@ -25,7 +25,6 @@ class _HomePageState extends State<HomePage> {
   void initState() {
     _controller = ScrollController();
     _controller.addListener((){
-     //_searchVisib = _controller.position.userScrollDirection == ScrollDirection.forward;
       if (_controller.position.userScrollDirection == ScrollDirection.forward) {
         setState(() {
           _searchVisib = true;
