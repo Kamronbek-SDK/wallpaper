@@ -1,8 +1,10 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
 import 'package:provider/provider.dart';
+import 'package:url_launcher/url_launcher.dart';
 import 'package:wallpaper_app/mvvm/home_provider.dart';
 import 'package:wallpaper_app/widget/image_item.dart';
 
@@ -95,7 +97,29 @@ class _HomePageState extends State<HomePage> {
               crossAxisSpacing: 4,
             ),
             itemCount: images.length,
-            itemBuilder: (context, index) => ImageItem(photo: images[index], onClick: (){})
+            itemBuilder: (context, index) => ImageItem(photo: images[index], onClick: (){
+              showDialog(context: context, builder: (BuildContext context) =>  AlertDialog(
+                title: const Text('Photo link.', style: TextStyle(fontSize: 18),),
+                actions: [
+                  CupertinoButton(child: const Text('Cancel'), onPressed: (){
+                    Navigator.of(context).pop();
+                  }),
+                  CupertinoButton(child: const Text('Open link'), onPressed: (){
+                    _launcher(images[index].url.toString());
+                    Navigator.of(context).pop();
+                  }),
+                ],
+                content: SizedBox(
+                  height: 130,
+                  child: Center(
+                    child: CupertinoButton(child:  Text(images[index].url.toString(), style: const TextStyle(color: CupertinoColors.activeBlue),),
+                        onPressed: (){
+                      _launcher(images[index].url.toString());
+                        }),
+                  ),
+                ),
+              ));
+            })
         ),
         Positioned(
           top: 12,
@@ -110,3 +134,7 @@ class _HomePageState extends State<HomePage> {
     );
   }
 }
+
+void _launcher(String link) async {
+    await launchUrl(Uri.parse(link));
+  }
